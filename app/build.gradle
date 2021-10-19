@@ -1,0 +1,89 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildFeatures {
+        dataBinding = true
+        viewBinding = true
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    defaultConfig {
+        applicationId "com.example.weatherapp"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
+            debuggable true
+        }
+        beta {
+            initWith debug
+            applicationIdSuffix '.beta'
+            versionNameSuffix '-BETA'
+            debuggable true
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        staging {
+            buildConfigField "String", "BASE_URL", '"https://api.openweathermap.org/data/2.5/forecast"'
+            buildConfigField "String", "APP_ID", '"1c26a46ef4f50692cbf77166d3fb6bdb"'
+        }
+        prod {
+            buildConfigField "String", "BASE_URL", '"https://api.openweathermap.org/data/2.5/forecast"'
+            buildConfigField "String", "APP_ID", '"1c26a46ef4f50692cbf77166d3fb6bdb"'
+        }
+    }
+}
+
+dependencies {
+    implementation project(path: ':basemodule')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.5.31"
+    implementation "androidx.multidex:multidex:$rootProject.ext.multidex"
+    // google play service
+    implementation "com.google.android.gms:play-services-base:$rootProject.ext.playServicesBase"
+
+    implementation "androidx.fragment:fragment-ktx:$rootProject.ext.fragmentVersion"
+
+    // Material design
+    implementation "com.google.android.material:material:$rootProject.ext.materialVersion"
+
+    // Kotlin coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    kapt "androidx.room:room-compiler:$rootProject.ext.roomVersion"
+
+    // testing
+    testImplementation "junit:junit:$rootProject.ext.jUnit"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.jUnitExt"
+    androidTestImplementation "androidx.test:rules:$rootProject.ext.testRules"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.espressoCore"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$rootProject.ext.espressoContrib"
+}

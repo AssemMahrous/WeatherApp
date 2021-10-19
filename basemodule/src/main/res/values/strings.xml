@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="message_error_no_internet">please check your internet connection</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_ok">okay</string>
+    <string name="title_error">error</string>
+    <string name="empty_state_wrong">something went wrong</string>
+</resources>

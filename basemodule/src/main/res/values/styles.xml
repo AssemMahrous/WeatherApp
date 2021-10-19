@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="UiKit.ThemeOverlay.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/UiKit.Widget.BottomSheet</item>
+    </style>
+
+    <style name="UiKit.Widget.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">
+            @style/UiKit.Widget.Card.ShapeAppearance.RoundedTop15dp
+        </item>
+    </style>
+</resources>
