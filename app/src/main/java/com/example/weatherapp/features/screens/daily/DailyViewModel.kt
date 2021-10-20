@@ -50,7 +50,7 @@ class DailyViewModel(
                     val weatherData = it.data.toWeatherView()
                     weatherData.list.forEachIndexed { index, weatherViewEntity ->
                         weatherViewEntity.dayName =
-                            if (index == 0) "Today" else getDayNameFromDateFuture(index + 1)
+                            if (index == 0) "Today" else getDayNameFromDateFuture(index)
                         weatherViewEntity.monthName = getDate(index)
                     }
                     _weatherView.postValue(weatherData)
