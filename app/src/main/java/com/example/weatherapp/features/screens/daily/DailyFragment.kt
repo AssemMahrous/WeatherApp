@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.weatherapp.R
 import com.example.weatherapp.basemodule.base.data.local.IPermissionsManager
 import com.example.weatherapp.basemodule.base.platform.BaseFragment
 import com.example.weatherapp.basemodule.utils.getKoinInstance
+import com.example.weatherapp.basemodule.utils.getNavigationResult
 import com.example.weatherapp.basemodule.utils.viewbinding.viewBinding
 import com.example.weatherapp.databinding.FragmentDailyBinding
+import com.example.weatherapp.features.screens.search.SearchFragment.Companion.REQUEST_KEY_SEARCH
 
 class DailyFragment : BaseFragment<DailyViewModel>() {
     private val permissionsManager by getKoinInstance<IPermissionsManager>()
@@ -31,6 +34,10 @@ class DailyFragment : BaseFragment<DailyViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getNavigationResult<String>(REQUEST_KEY_SEARCH)?.observe(viewLifecycleOwner) {
+            query = it
+            viewModel.start(false, query)
+        }
         binding.weatherListRecyclerView.adapter = adapter
 
         binding.weatherListSwipeRefreshLayout.setOnRefreshListener {
@@ -39,7 +46,7 @@ class DailyFragment : BaseFragment<DailyViewModel>() {
         }
 
         binding.search.setOnClickListener {
-
+            findNavController().navigate(DailyFragmentDirections.actionNavDailyFragmentToNavSearchDialog())
         }
         getData()
         observeViewModel()

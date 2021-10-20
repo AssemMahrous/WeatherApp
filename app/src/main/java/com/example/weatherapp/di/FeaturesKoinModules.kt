@@ -11,6 +11,7 @@ import com.example.weatherapp.features.module.data.WeatherRepository
 import com.example.weatherapp.features.module.usecase.GetWeatherDataUseCase
 import com.example.weatherapp.features.screens.daily.DailyViewModel
 import com.example.weatherapp.features.screens.main.MainViewModel
+import com.example.weatherapp.features.screens.search.SearchViewModel
 import org.koin.androidx.experimental.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -34,8 +35,8 @@ object FeaturesKoinModules {
             list.add(module {
                 //view models
                 viewModel<MainViewModel>()
-
                 viewModel<DailyViewModel>()
+                viewModel<SearchViewModel>()
 
                 //use cases
                 factory<GetWeatherDataUseCase>()

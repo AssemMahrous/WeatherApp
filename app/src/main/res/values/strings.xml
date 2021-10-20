@@ -7,4 +7,5 @@
     <string name="sunset">SUNSET</string>
     <string name="sunrise">SUNRISE</string>
     <string name="celesius">C</string>
+    <string name="search">Search</string>
 </resources>

@@ -125,6 +125,7 @@ interface IBaseView<ViewModel : BaseViewModel> {
                 ErrorType.Network.InternalServerError -> TODO_IF_DEBUG()
                 ErrorType.Network.UnsupportedMediaType -> TODO_IF_DEBUG()
                 ErrorType.Local.ContentProvider.ReadContactError -> showErrorDialog(error)
+                ErrorType.Local.Validation.validationError -> showErrorDialog(error)
                 ErrorType.Unexpected -> TODO_IF_DEBUG()
                 ErrorType.UserError -> TODO_IF_DEBUG()
                 ErrorType.Firebase -> TODO_IF_DEBUG()

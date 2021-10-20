@@ -9,6 +9,15 @@
         android:id="@+id/nav_daily_fragment"
         android:name="com.example.weatherapp.features.screens.daily.DailyFragment"
         android:label="Fragment daily"
-        tools:layout="@layout/fragment_daily" />
+        tools:layout="@layout/fragment_daily" >
+        <action
+            android:id="@+id/action_nav_daily_fragment_to_nav_searchDialog"
+            app:destination="@id/nav_searchDialog" />
+    </fragment>
 
+    <dialog
+        android:id="@+id/nav_searchDialog"
+        android:name="com.example.weatherapp.features.screens.search.SearchFragment"
+        android:label="Dialog Search"
+        tools:layout="@layout/fragment_search" />
 </navigation>
