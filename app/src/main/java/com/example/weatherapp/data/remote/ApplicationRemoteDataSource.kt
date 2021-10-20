@@ -6,5 +6,5 @@ import retrofit2.Retrofit
 
 class ApplicationRemoteDataSource(override val retrofit: Retrofit) : RemoteDataSourceImpl(retrofit),
     IApplicationRemoteDataSource {
-    override val flatsApi: WeatherApi = retrofit.create(WeatherApi::class.java)
+    override val weatherApi: WeatherApi = retrofit.create(WeatherApi::class.java)
 }

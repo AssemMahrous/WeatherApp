@@ -5,6 +5,10 @@
     android:id="@+id/main_navigation"
     app:startDestination="@id/nav_daily_fragment">
 
-
+    <fragment
+        android:id="@+id/nav_daily_fragment"
+        android:name="com.example.weatherapp.features.screens.daily.DailyFragment"
+        android:label="Fragment daily"
+        tools:layout="@layout/fragment_daily" />
 
 </navigation>

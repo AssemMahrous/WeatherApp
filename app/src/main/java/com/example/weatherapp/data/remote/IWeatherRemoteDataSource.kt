@@ -4,5 +4,5 @@ import com.example.weatherapp.basemodule.base.data.remote.IRemoteDataSource
 import com.example.weatherapp.data.remote.api.WeatherApi
 
 interface IWeatherRemoteDataSource : IRemoteDataSource {
-    val flatsApi: WeatherApi
+    val weatherApi: WeatherApi
 }

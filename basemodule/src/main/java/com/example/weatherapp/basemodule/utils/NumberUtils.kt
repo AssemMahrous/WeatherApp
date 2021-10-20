@@ -4,79 +4,7 @@ import java.math.BigDecimal
 import java.math.BigInteger
 
 object NumberUtils {
-    //-----------------------------------------------------------------------
-    // must handle Long, Float, Integer, Float, Short,
-    //                  BigDecimal, BigInteger and Byte
-    // useful methods:
-    // Byte.decode(String)
-    // Byte.valueOf(String, int radix)
-    // Byte.valueOf(String)
-    // Double.valueOf(String)
-    // Float.valueOf(String)
-    // Float.valueOf(String)
-    // Integer.valueOf(String, int radix)
-    // Integer.valueOf(String)
-    // Integer.decode(String)
-    // Integer.getInteger(String)
-    // Integer.getInteger(String, int val)
-    // Integer.getInteger(String, Integer val)
-    // Integer.valueOf(String)
-    // Double.valueOf(String)
-    // new Byte(String)
-    // Long.valueOf(String)
-    // Long.getLong(String)
-    // Long.getLong(String, int)
-    // Long.getLong(String, Integer)
-    // Long.valueOf(String, int)
-    // Long.valueOf(String)
-    // Short.valueOf(String)
-    // Short.decode(String)
-    // Short.valueOf(String, int)
-    // Short.valueOf(String)
-    // new BigDecimal(String)
-    // new BigInteger(String)
-    // new BigInteger(String, int radix)
-    // Possible inputs:
-    // 45 45.5 45E7 4.5E7 Hex Oct Binary xxxF xxxD xxxf xxxd
-    // plus minus everything. Prolly more. A lot are not separable.
-    /**
-     *
-     * Turns a string value into a java.lang.Number.
-     *
-     *
-     * If the string starts with `0x` or `-0x` (lower or upper case) or `#` or `-#`, it
-     * will be interpreted as a hexadecimal Integer - or Long, if the number of digits after the
-     * prefix is more than 8 - or BigInteger if there are more than 16 digits.
-     *
-     *
-     * Then, the value is examined for a type qualifier on the end, i.e. one of
-     * `'f', 'F', 'd', 'D', 'l', 'L'`.  If it is found, it starts
-     * trying to create successively larger types from the type specified
-     * until one is found that can represent the value.
-     *
-     *
-     * If a type specifier is not found, it will check for a decimal point
-     * and then try successively larger types from `Integer` to
-     * `BigInteger` and from `Float` to
-     * `BigDecimal`.
-     *
-     *
-     *
-     * Integral values with a leading `0` will be interpreted as octal; the returned number will
-     * be Integer, Long or BigDecimal as appropriate.
-     *
-     *
-     *
-     * Returns `null` if the string is `null`.
-     *
-     *
-     * This method does not trim the input string, i.e., strings with leading
-     * or trailing spaces will generate NumberFormatExceptions.
-     *
-     * @param str String containing a number, may be null
-     * @return Number created from the string (or null if the input is null)
-     * @throws NumberFormatException if the value cannot be converted
-     */
+
     fun createNumber(str: String?): Number? {
         if (str == null) {
             return null
@@ -151,7 +79,10 @@ object NumberUtils {
             val allZeros = isAllZeros(mant) && isAllZeros(exp)
             when (lastChar) {
                 'l', 'L' -> {
-                    if (dec == null && exp == null && (!numeric.isEmpty() && numeric[0] == '-' && isDigits(numeric.substring(1)) || isDigits(numeric))) {
+                    if (dec == null && exp == null && (!numeric.isEmpty() && numeric[0] == '-' && isDigits(
+                            numeric.substring(1)
+                        ) || isDigits(numeric))
+                    ) {
                         try {
                             return createLong(numeric)
                         } catch (nfe: NumberFormatException) { // NOPMD
@@ -232,8 +163,9 @@ object NumberUtils {
             val f = createFloat(str)
             val d = createDouble(str)
             if (!f!!.isInfinite()
-                    && !(f.toFloat() == 0.0f && !allZeros)
-                    && f.toString() == d.toString()) {
+                && !(f.toFloat() == 0.0f && !allZeros)
+                && f.toString() == d.toString()
+            ) {
                 return f
             }
             if (!d!!.isInfinite() && !(d.toDouble() == 0.0 && !allZeros)) {
@@ -248,47 +180,16 @@ object NumberUtils {
         return createBigDecimal(str)
     }
 
-    /**
-     *
-     * Utility method for [.createNumber].
-     *
-     *
-     * Returns mantissa of the given number.
-     *
-     * @param str the string representation of the number
-     * @return mantissa of the given number
-     */
     private fun getMantissa(str: String): String {
         return getMantissa(str, str.length)
     }
 
-    /**
-     *
-     * Utility method for [.createNumber].
-     *
-     *
-     * Returns mantissa of the given number.
-     *
-     * @param str     the string representation of the number
-     * @param stopPos the position of the exponent or decimal point
-     * @return mantissa of the given number
-     */
     private fun getMantissa(str: String, stopPos: Int): String {
         val firstChar = str[0]
         val hasSign = firstChar == '-' || firstChar == '+'
         return if (hasSign) str.substring(1, stopPos) else str.substring(0, stopPos)
     }
 
-    /**
-     *
-     * Utility method for [.createNumber].
-     *
-     *
-     * Returns `true` if s is `null`.
-     *
-     * @param str the String to check
-     * @return if it is all zeros or `null`
-     */
     private fun isAllZeros(str: String?): Boolean {
         if (str == null) {
             return true
@@ -300,19 +201,8 @@ object NumberUtils {
         }
         return !str.isEmpty()
     }
+
     //-----------------------------------------------------------------------
-    /**
-     *
-     * Convert a `String` to a `BigInteger`;
-     * since 3.2 it handles hex (0x or #) and octal (0) notations.
-     *
-     *
-     * Returns `null` if the string is `null`.
-     *
-     * @param str a `String` to convert, may be null
-     * @return converted `BigInteger` (or null if the input is null)
-     * @throws NumberFormatException if the value cannot be converted
-     */
     fun createBigInteger(str: String?): BigInteger? {
         if (str == null) {
             return null
@@ -330,7 +220,11 @@ object NumberUtils {
         } else if (str.startsWith("#", pos)) { // alternative hex (allowed by Long/Integer)
             radix = 16
             pos++
-        } else if (str.startsWith("0", pos) && str.length > pos + 1) { // octal; so long as there are additional digits
+        } else if (str.startsWith(
+                "0",
+                pos
+            ) && str.length > pos + 1
+        ) { // octal; so long as there are additional digits
             radix = 8
             pos++
         } // default is to treat as decimal
@@ -338,53 +232,18 @@ object NumberUtils {
         return if (negate) value.negate() else value
     }
 
-    /**
-     *
-     * Convert a `String` to a `Float`.
-     *
-     *
-     * Returns `null` if the string is `null`.
-     *
-     * @param str a `String` to convert, may be null
-     * @return converted `Float` (or null if the input is null)
-     * @throws NumberFormatException if the value cannot be converted
-     */
     fun createFloat(str: String?): Float? {
         return if (str == null) {
             null
         } else java.lang.Float.valueOf(str)
     }
 
-    /**
-     *
-     * Convert a `String` to a `Double`.
-     *
-     *
-     * Returns `null` if the string is `null`.
-     *
-     * @param str a `String` to convert, may be null
-     * @return converted `Double` (or null if the input is null)
-     * @throws NumberFormatException if the value cannot be converted
-     */
     fun createDouble(str: String?): Double? {
         return if (str == null) {
             null
         } else java.lang.Double.valueOf(str)
     }
 
-    /**
-     *
-     * Convert a `String` to a `Integer`, handling
-     * hex (0xhhhh) and octal (0dddd) notations.
-     * N.B. a leading zero means octal; spaces are not trimmed.
-     *
-     *
-     * Returns `null` if the string is `null`.
-     *
-     * @param str a `String` to convert, may be null
-     * @return converted `Integer` (or null if the input is null)
-     * @throws NumberFormatException if the value cannot be converted
-     */
     fun createInteger(str: String?): Int? {
         return if (str == null) {
             null
@@ -392,52 +251,16 @@ object NumberUtils {
         // decode() handles 0xAABD and 0777 (hex and octal) as well.
     }
 
-    /**
-     *
-     * Convert a `String` to a `Long`;
-     * since 3.1 it handles hex (0Xhhhh) and octal (0ddd) notations.
-     * N.B. a leading zero means octal; spaces are not trimmed.
-     *
-     *
-     * Returns `null` if the string is `null`.
-     *
-     * @param str a `String` to convert, may be null
-     * @return converted `Long` (or null if the input is null)
-     * @throws NumberFormatException if the value cannot be converted
-     */
     fun createLong(str: String?): Long? {
         return if (str == null) {
             null
         } else java.lang.Long.decode(str)
     }
 
-    /**
-     *
-     * Checks whether the `String` contains only
-     * digit characters.
-     *
-     *
-     * `Null` and empty String will return
-     * `false`.
-     *
-     * @param str the `String` to check
-     * @return `true` if str contains only Unicode numeric
-     */
     fun isDigits(str: String?): Boolean {
         return str?.let { isNumeric(it) } ?: false
     }
 
-    /**
-     *
-     * Convert a `String` to a `BigDecimal`.
-     *
-     *
-     * Returns `null` if the string is `null`.
-     *
-     * @param str a `String` to convert, may be null
-     * @return converted `BigDecimal` (or null if the input is null)
-     * @throws NumberFormatException if the value cannot be converted
-     */
     fun createBigDecimal(str: String?): BigDecimal? {
         if (str == null) {
             return null
@@ -449,40 +272,6 @@ object NumberUtils {
         return BigDecimal(str)
     }
 
-    /**
-     *
-     * Checks if the CharSequence contains only Unicode digits.
-     * A decimal point is not a Unicode digit and returns false.
-     *
-     *
-     * `null` will return `false`.
-     * An empty CharSequence (length()=0) will return `false`.
-     *
-     *
-     * Note that the method does not allow for a leading sign, either positive or negative.
-     * Also, if a String passes the numeric test, it may still generate a NumberFormatException
-     * when parsed by Integer.parseInt or Long.parseLong, e.g. if the value is outside the range
-     * for int or long respectively.
-     *
-     * <pre>
-     * StringUtils.isNumeric(null)   = false
-     * StringUtils.isNumeric("")     = false
-     * StringUtils.isNumeric("  ")   = false
-     * StringUtils.isNumeric("123")  = true
-     * StringUtils.isNumeric("\u0967\u0968\u0969")  = true
-     * StringUtils.isNumeric("12 3") = false
-     * StringUtils.isNumeric("ab2c") = false
-     * StringUtils.isNumeric("12-3") = false
-     * StringUtils.isNumeric("12.3") = false
-     * StringUtils.isNumeric("-123") = false
-     * StringUtils.isNumeric("+123") = false
-    </pre> *
-     *
-     * @param cs the CharSequence to check, may be null
-     * @return `true` if only contains digits, and is non-null
-     * @since 3.0 Changed signature from isNumeric(String) to isNumeric(CharSequence)
-     * @since 3.0 Changed "" to return false and not true
-     */
     fun isNumeric(cs: CharSequence): Boolean {
         if (cs.isEmpty()) {
             return false

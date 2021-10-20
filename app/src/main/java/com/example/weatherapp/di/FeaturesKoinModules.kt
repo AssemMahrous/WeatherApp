@@ -6,6 +6,11 @@ import com.example.weatherapp.data.local.ApplicationLocalDataSource
 import com.example.weatherapp.data.local.IApplicationLocalDataSource
 import com.example.weatherapp.data.local.IWeatherLocalDataSource
 import com.example.weatherapp.data.remote.IWeatherRemoteDataSource
+import com.example.weatherapp.features.module.data.IWeatherRepository
+import com.example.weatherapp.features.module.data.WeatherRepository
+import com.example.weatherapp.features.module.usecase.GetWeatherDataUseCase
+import com.example.weatherapp.features.screens.daily.DailyViewModel
+import com.example.weatherapp.features.screens.main.MainViewModel
 import org.koin.androidx.experimental.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -25,7 +30,19 @@ object FeaturesKoinModules {
             list.add(appCacheModule)
             list.add(appNetworkModule)
 
+            // weather
+            list.add(module {
+                //view models
+                viewModel<MainViewModel>()
 
+                viewModel<DailyViewModel>()
+
+                //use cases
+                factory<GetWeatherDataUseCase>()
+
+                //repositories
+                factory<IWeatherRepository> { WeatherRepository(get(), get()) }
+            })
             return list
         }
 
@@ -42,7 +59,6 @@ object FeaturesKoinModules {
         appCacheModule = module {
             single<IApplicationLocalDataSource> {
                 ApplicationLocalDataSource(
-                    get(),
                     get()
                 )
             }

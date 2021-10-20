@@ -52,11 +52,11 @@ android {
     flavorDimensions "default"
     productFlavors {
         staging {
-            buildConfigField "String", "BASE_URL", '"https://api.openweathermap.org/data/2.5/forecast"'
+            buildConfigField "String", "BASE_URL", '"https://api.openweathermap.org/data/2.5/"'
             buildConfigField "String", "APP_ID", '"1c26a46ef4f50692cbf77166d3fb6bdb"'
         }
         prod {
-            buildConfigField "String", "BASE_URL", '"https://api.openweathermap.org/data/2.5/forecast"'
+            buildConfigField "String", "BASE_URL", '"https://api.openweathermap.org/data/2.5/"'
             buildConfigField "String", "APP_ID", '"1c26a46ef4f50692cbf77166d3fb6bdb"'
         }
     }

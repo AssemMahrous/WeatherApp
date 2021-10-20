@@ -83,6 +83,9 @@ sealed class ErrorType {
         sealed class ContentProvider : Local() {
             object ReadContactError : ContentProvider()
         }
+        sealed class Validation : Local() {
+            object validationError : Validation()
+        }
     }
 
     object Unexpected : ErrorType()

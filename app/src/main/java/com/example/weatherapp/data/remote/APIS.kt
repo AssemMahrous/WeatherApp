@@ -1,7 +1,15 @@
 package com.example.weatherapp.data.remote
 
+import com.example.weatherapp.BuildConfig.BASE_URL
+
 
 object APIS {
-//    private const val PATH_JSON = "apartments.json"
-//    const val APARTMENTS_URL = "$BASE_URL$PATH_JSON"
+    private const val FORECAST="forecast"
+    const val URL_WEATHER = "$BASE_URL$FORECAST"
+    const val LAT = "lat"
+    const val LON = "lon"
+    const val CNT = "cnt"
+    const val UNITS = "units"
+    const val QUERYDATA = "q"
+    const val APPID = "appid"
 }

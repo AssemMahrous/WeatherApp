@@ -3,8 +3,6 @@ package com.example.weatherapp.basemodule.utils
 import android.app.Activity
 import android.content.Context
 import android.os.Build
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
@@ -13,17 +11,15 @@ import androidx.navigation.fragment.findNavController
 import com.example.weatherapp.basemodule.BuildConfig
 import com.example.weatherapp.basemodule.base.data.model.ApplicationMessage
 import com.example.weatherapp.basemodule.base.di.AppConfigurationModule.isDebug
-import com.google.android.material.datepicker.CalendarConstraints
 import okhttp3.Headers
 import okhttp3.internal.toHeaderList
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.koin.core.qualifier.Qualifier
+import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.atan2
-import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 import kotlin.reflect.KClass
@@ -128,89 +124,34 @@ fun Headers?.toHashMap() =
         }
     }
 
-fun getDistance(lng1: Double, lat1: Double, lng2: Double, lat2: Double): Double {
+fun getDayNameFromDateFuture(days: Int): String {
+    val calendar = Calendar.getInstance()
+    calendar.add(Calendar.DATE, days)
+    val date = calendar.time
+    val formatter = SimpleDateFormat("EEE", Locale.ENGLISH)
+    return formatter.format(date)
+}
+
+fun getDate(days: Int): String {
+    val calendar = Calendar.getInstance()
+    calendar.add(Calendar.DATE, days)
+    val date = calendar.time
+    val formatter = SimpleDateFormat("MMM d", Locale.ENGLISH)
+    return formatter.format(date)
+}
+
+fun getTimeShortFormat(time: Long): String {
+    val date = Date(time * 1000)
+    val formatter = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+    return formatter.format(date)
+}
+
+fun <T> MutableLiveData<T>.toLiveData(): LiveData<T> {
+    return this
+}
+
+fun roundOffDecimal(number: Double): Double? {
     val df = DecimalFormat("#.##")
-    val earthRadius = 3958.75
-    val latDiff = Math.toRadians(lat2 - lat1)
-    val lngDiff = Math.toRadians(lng2 - lng1)
-    val a = sin(latDiff / 2) * sin(latDiff / 2) +
-            cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) *
-            sin(lngDiff / 2) * sin(lngDiff / 2)
-    val c = 2 * atan2(sqrt(a), sqrt(1 - a))
-    val distance = earthRadius * c
-
-    val meterConversion = 1609
-
-    return df.format(distance * meterConversion).toDouble()
-}
-
-fun limitRange(): CalendarConstraints.Builder {
-    val constraintsBuilderRange = CalendarConstraints.Builder()
-    val calendarStart = Calendar.getInstance()
-    val calendarEnd = Calendar.getInstance()
-    val year = calendarStart.get(Calendar.YEAR)
-    val startMonth = calendarStart.get(Calendar.MONTH)
-    val startDate = calendarStart.get(Calendar.DAY_OF_MONTH)
-    val endMonth = startMonth + 1
-    val endDate = startDate + 10
-    calendarStart[year, startMonth] = startDate
-    calendarEnd[year, endMonth] = endDate
-    val minDate = calendarStart.timeInMillis
-    val maxDate = calendarEnd.timeInMillis
-    constraintsBuilderRange.setStart(minDate)
-    constraintsBuilderRange.setEnd(maxDate)
-    constraintsBuilderRange.setValidator(RangeValidator(minDate, maxDate))
-    return constraintsBuilderRange
-}
-
-internal class RangeValidator : CalendarConstraints.DateValidator {
-    var minDate: Long
-    var maxDate: Long
-
-    constructor(minDate: Long, maxDate: Long) {
-        this.minDate = minDate
-        this.maxDate = maxDate
-    }
-
-    constructor(parcel: Parcel) {
-        minDate = parcel.readLong()
-        maxDate = parcel.readLong()
-    }
-
-    override fun isValid(date: Long): Boolean {
-        return !(minDate > date || maxDate < date)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeLong(minDate)
-        dest.writeLong(maxDate)
-    }
-
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<RangeValidator?> =
-            object : Parcelable.Creator<RangeValidator?> {
-                override fun createFromParcel(parcel: Parcel): RangeValidator? {
-                    return RangeValidator(parcel)
-                }
-
-                override fun newArray(size: Int): Array<RangeValidator?> {
-                    return arrayOfNulls(size)
-                }
-            }
-    }
-}
-
-fun convertLongToTime(time: Long): String {
-    val date = Date(time)
-    val format = SimpleDateFormat("yyyy.MM.dd")
-    return format.format(date)
-}
-
-fun currentTimeToLong(): Long {
-    return System.currentTimeMillis()
+    df.roundingMode = RoundingMode.CEILING
+    return df.format(number).toDouble()
 }

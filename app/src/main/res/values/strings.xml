@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="wind_speed">WIND SPEED</string>
+    <string name="description">DESCRIPTION</string>
+    <string name="sunset">SUNSET</string>
+    <string name="sunrise">SUNRISE</string>
+    <string name="celesius">C</string>
 </resources>

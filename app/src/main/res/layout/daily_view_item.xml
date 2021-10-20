@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:id="@+id/weatherCard"
+    app:cardBackgroundColor="@color/purple_200"
+    app:cardCornerRadius="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/dayName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Friday" />
+
+        <TextView
+            android:id="@+id/monthName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/dayName"
+            app:layout_constraintTop_toBottomOf="@id/dayName"
+            tools:text=" june 7" />
+
+        <TextView
+            android:id="@+id/temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/white"
+            android:textSize="48sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="77" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/celesius"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/temp"
+            app:layout_constraintStart_toEndOf="@id/temp" />
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/timeDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/white"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/temp" />
+
+        <TextView
+            android:id="@+id/sunriseTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/sunrise"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/timeDivider"
+            app:layout_constraintTop_toBottomOf="@id/timeDivider" />
+
+        <TextView
+            android:id="@+id/sunsetTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/sunset"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/temp"
+            app:layout_constraintTop_toBottomOf="@id/timeDivider" />
+
+        <TextView
+            android:id="@+id/sunriseValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/sunriseTitle"
+            app:layout_constraintTop_toBottomOf="@id/sunriseTitle" />
+
+        <TextView
+            android:id="@+id/sunsetValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/sunsetTitle"
+            app:layout_constraintTop_toBottomOf="@id/sunsetTitle" />
+
+        <View
+            android:id="@+id/conditionDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/white"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/sunsetValue" />
+
+        <TextView
+            android:id="@+id/descriptionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/description"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/conditionDivider"
+            app:layout_constraintTop_toBottomOf="@id/conditionDivider" />
+
+        <TextView
+            android:id="@+id/windTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/wind_speed"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/temp"
+            app:layout_constraintTop_toBottomOf="@id/conditionDivider" />
+
+        <TextView
+            android:id="@+id/descriptionValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/descriptionTitle"
+            app:layout_constraintTop_toBottomOf="@id/descriptionTitle" />
+
+        <TextView
+            android:id="@+id/windValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/windTitle"
+            app:layout_constraintTop_toBottomOf="@id/windTitle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
